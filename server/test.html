@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume API Test</title>
+</head>
+
+<body>
+
+    <h2>ResumePilot Backend Test</h2>
+
+    <button onclick="createResume()">Create Test Resume</button>
+
+    <pre id="result"></pre>
+
+    <script>
+        async function createResume() {
+
+            const resumeData = {
+                title: "Test Resume",
+
+                personal_info: {
+                    fullName: "Test User",
+                    jobTitle: "B.Sc. Computer Science Student",
+                    email: "test@example.com",
+                    phone: "9876543210",
+                    location: "Mumbai",
+                    linkedin: "https://linkedin.com/in/test",
+                    github: "https://github.com/test",
+                    portfolio: ""
+                },
+
+                professional_summary:
+                    "Motivated computer science student interested in web development and AI.",
+
+                experience: [],
+
+                education: [],
+
+                skills: [
+                    "Java",
+                    "React",
+                    "MongoDB"
+                ],
+
+                projects: [],
+
+                template: "classic",
+
+                accent_color: "#3B82F6",
+
+                public: false
+            };
+
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/resumes",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(resumeData)
+                    }
+                );
+
+
+                const data = await response.json();
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+
+            } catch (error) {
+
+                document.getElementById("result").textContent =
+                    error.message;
+
+            }
+
+        }
+    </script>
+
+</body>
+</html>
